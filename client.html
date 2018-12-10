@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<script>
+    document.addEventListener("DOMContentLoaded",()=>{
+        start()
+    })
+    function start(){
+        const el = document.getElementById("msgs");
+        console.log("Here");
+        let msg = "";
+        var oReq = new XMLHttpRequest();
+        oReq.onreadystatechange = function () {
+            var loading = this.loading || 3;
+            if (this.readyState === loading) {
+                const msgs = oReq.responseText.split("\n");
+                const liEl = document.createElement('li');
+                liEl.innerText = msgs[msgs.length - 2]
+                el.appendChild(liEl);
+            }
+        };
+        oReq.addEventListener("load", ()=>console.log("load"));
+        oReq.open("GET", "http:localhost:2000");
+        oReq.send();
+    }
+</script>
+
+</head>
+
+<body>
+<ul id="msgs">
+</ul>
+</body>
+
+</html>
